@@ -11,25 +11,22 @@ var wordPattern = function (pattern, s) {
     return false;
   }
 
-  const map = new Map();
-  const set = new Set();
+  const pMap = new Map();
+  const sMap = new Map();
 
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    const value = values[i];
+    const val = values[i];
 
-    if (map.has(key)) {
-      if (map.get(key) !== value) {
-        return false;
-      }
-    } else {
-      if (set.has(value)) {
-        return false;
-      }
-
-      map.set(key, value);
-      set.add(value);
+    if (
+      (pMap.has(key) && pMap.get(key) !== val) ||
+      (sMap.has(val) && sMap.get(val) !== key)
+    ) {
+      return false;
     }
+
+    pMap.set(key, val);
+    sMap.set(val, key);
   }
 
   return true;
