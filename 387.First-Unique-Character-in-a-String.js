@@ -16,5 +16,5 @@ var firstUniqChar = function (s) {
     }
   }
 
-  return index;
+  return index === Infinity ? -1 : index;
 };
