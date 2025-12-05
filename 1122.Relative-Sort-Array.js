@@ -4,39 +4,16 @@
  * @return {number[]}
  */
 var relativeSortArray = function (arr1, arr2) {
-  const map = new Map();
-  const present = [];
-  const not_present = [];
+  const rank = new Map();
 
-  for (const num of arr1) {
-    map.set(num, (map.get(num) || 0) + 1);
-  }
+  arr2.forEach((num, i) => rank.set(num, i));
 
-  for (const num of arr2) {
-    if (map.has(num)) {
-      while (map.get(num) >= 1) {
-        present.push(num);
-        map.set(num, map.get(num) - 1);
+  arr1.sort((a, b) => {
+    const ra = rank.has(a) ? rank.get(a) : Infinity;
+    const rb = rank.has(b) ? rank.get(b) : Infinity;
 
-        if (map.get(num) === 0) {
-          map.delete(num);
-        }
-      }
-    }
-  }
+    return ra === rb ? a - b : ra - rb;
+  });
 
-  for (const key of map.keys()) {
-    while (map.get(key) >= 1) {
-      not_present.push(key);
-      map.set(key, map.get(key) - 1);
-
-      if (map.get(key) === 0) {
-        map.delete(key);
-      }
-    }
-  }
-
-  not_present.sort((a, b) => a - b);
-
-  return [...present, ...not_present];
+  return arr1;
 };
