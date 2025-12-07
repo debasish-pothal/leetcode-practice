@@ -14,19 +14,15 @@
 var findTarget = function (root, k) {
   const set = new Set();
 
-  const traverse = (node) => {
-    if (!node) {
-      return false;
-    }
-
-    if (traverse(node.left)) return true;
+  const dfs = (node) => {
+    if (!node) return false;
 
     const req = k - node.val;
     if (set.has(req)) return true;
     set.add(node.val);
 
-    return traverse(node.right);
+    return dfs(node.left) || dfs(node.right);
   };
 
-  return traverse(root);
+  return dfs(root);
 };
