@@ -11,15 +11,19 @@
  * @return {number[]}
  */
 var preorderTraversal = function (root) {
+  if (!root) return [];
+
   const result = [];
+  const stack = [root];
 
-  const traverse = (node) => {
+  while (stack.length) {
+    const node = stack.pop();
     result.push(node.val);
-    if (node.left) traverse(node.left);
-    if (node.right) traverse(node.right);
-  };
 
-  if (root) traverse(root);
+    // push right first so that left is processed first
+    if (node.right) stack.push(node.right);
+    if (node.left) stack.push(node.left);
+  }
 
   return result;
 };
