@@ -3,22 +3,20 @@
  * @return {number}
  */
 var findDuplicate = function (nums) {
-  let slow = 0;
-  let fast = 0;
+  let slow = nums[0];
+  let fast = nums[0];
 
-  while (true) {
+  do {
     slow = nums[slow];
     fast = nums[nums[fast]];
+  } while (slow !== fast);
 
-    if (slow === fast) {
-      let pointer = 0;
+  slow = nums[0];
 
-      while (fast !== pointer) {
-        fast = nums[fast];
-        pointer = nums[pointer];
-      }
-
-      return pointer;
-    }
+  while (slow !== fast) {
+    slow = nums[slow];
+    fast = nums[fast];
   }
+
+  return slow;
 };
