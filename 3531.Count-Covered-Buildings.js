@@ -6,28 +6,38 @@
 var countCoveredBuildings = function (n, buildings) {
   let count = 0;
 
-  for (let i = 0; i < buildings.length; i++) {
-    let [x, y] = buildings[i];
+  // group rows, cols
+  const rows = new Map();
+  const cols = new Map();
 
-    let hasLeft = false;
-    let hasRight = false;
-    let hasAbove = false;
-    let hasBelow = false;
+  for (const [x, y] of buildings) {
+    if (!rows.has(y)) rows.set(y, []);
+    if (!cols.has(x)) cols.set(x, []);
 
-    for (let j = 0; j < buildings.length; j++) {
-      if (i === j) continue;
+    rows.get(y).push(x);
+    cols.get(x).push(y);
+  }
 
-      const [x2, y2] = buildings[j];
+  // sort to get min and max value
+  for (const arr of rows.values()) arr.sort((a, b) => a - b);
+  for (const arr of cols.values()) arr.sort((a, b) => a - b);
 
-      if (y === y2 && x > x2) hasLeft = true;
-      if (y === y2 && x < x2) hasRight = true;
-      if (x === x2 && y > y2) hasAbove = true;
-      if (x === x2 && y < y2) hasBelow = true;
-    }
+  // process the buildings
+  for (const [x, y] of buildings) {
+    const row = rows.get(y);
+    const col = cols.get(x);
 
-    if (hasLeft && hasRight && hasAbove && hasBelow) {
-      count += 1;
-    }
+    const minX = row[0];
+    const maxX = row[row.length - 1];
+    const minY = col[0];
+    const maxY = col[col.length - 1];
+
+    const hasLeft = minX < x;
+    const hasRight = maxX > x;
+    const hasBelow = minY < y;
+    const hasAbove = maxY > y;
+
+    if (hasLeft && hasRight && hasBelow && hasAbove) count += 1;
   }
 
   return count;
