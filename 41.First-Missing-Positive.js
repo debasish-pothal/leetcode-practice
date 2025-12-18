@@ -3,16 +3,27 @@
  * @return {number}
  */
 var firstMissingPositive = function (nums) {
-  const sortedNums = nums.filter((a) => a > 0).sort((a, b) => a - b);
+  const n = nums.length;
 
-  if (!sortedNums.length) return 1;
-
-  const start = 1;
-  const end = sortedNums[sortedNums.length - 1];
-
-  for (let i = start; i <= end; i++) {
-    if (!sortedNums.includes(i)) return i;
+  for (let i = 0; i < n; i++) {
+    if (nums[i] <= 0) nums[i] = 0;
   }
 
-  return end + 1;
+  for (let i = 0; i < n; i++) {
+    const index = Math.abs(nums[i]) - 1;
+
+    if (index < 0 || index >= n) continue;
+
+    if (nums[index] > 0) {
+      nums[index] = -1 * nums[index];
+    } else if (nums[index] === 0) {
+      nums[index] = -1 * (n + 1);
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    if (nums[i] >= 0) return i + 1;
+  }
+
+  return n + 1;
 };
