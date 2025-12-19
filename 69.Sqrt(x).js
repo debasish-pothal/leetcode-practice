@@ -3,16 +3,16 @@
  * @return {number}
  */
 var mySqrt = function (x) {
-  let start = 1;
+  let start = 0;
   let end = x;
 
   while (start <= end) {
-    const mid = Math.floor((start + end) / 2);
-    const sqr = mid * mid;
+    const mid = start + Math.floor((end - start) / 2);
+    const midSqr = mid * mid;
 
-    if (sqr > x) {
+    if (midSqr > x) {
       end = mid - 1;
-    } else if (sqr < x) {
+    } else if (midSqr < x) {
       start = mid + 1;
     } else {
       return mid;
