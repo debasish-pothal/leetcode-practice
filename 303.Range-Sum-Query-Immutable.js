@@ -9,12 +9,11 @@
 class NumArray {
   constructor(nums) {
     this.nums = [...nums];
-
     this.prefix = [];
     let sum = 0;
 
-    for (let i = 0; i < nums.length; i++) {
-      sum += nums[i];
+    for (const num of nums) {
+      sum += num;
       this.prefix.push(sum);
     }
   }
@@ -25,9 +24,8 @@ class NumArray {
    * @return {number}
    */
   sumRange(left, right) {
-    const val1 = left - 1 < 0 ? 0 : this.prefix[left - 1];
-    const val2 = this.prefix[right];
+    if (left === 0) return this.prefix[right];
 
-    return val2 - val1;
+    return this.prefix[right] - this.prefix[left - 1];
   }
 }
