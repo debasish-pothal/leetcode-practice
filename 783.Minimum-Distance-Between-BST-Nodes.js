@@ -11,21 +11,22 @@
  * @return {number}
  */
 var minDiffInBST = function (root) {
-  const result = [];
+  let diff = Infinity;
+  let prev = null;
 
   const traverse = (node) => {
     if (node.left) traverse(node.left);
-    result.push(node.val);
+
+    if (prev) {
+      diff = Math.min(diff, node.val - prev.val);
+    }
+
+    prev = node;
+
     if (node.right) traverse(node.right);
   };
 
   traverse(root);
-
-  let diff = Infinity;
-
-  for (let i = 1; i < result.length; i++) {
-    diff = Math.min(diff, result[i] - result[i - 1]);
-  }
 
   return diff;
 };
