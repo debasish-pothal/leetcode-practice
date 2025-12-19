@@ -4,18 +4,21 @@
  * @return {number[]}
  */
 var topKFrequent = function (nums, k) {
+  const length = nums.length;
   const map = new Map();
-  const minHeap = new MinPriorityQueue();
+  const temp = [];
   const result = [];
 
   for (const num of nums) map.set(num, (map.get(num) || 0) + 1);
 
-  for (const [num, count] of map) {
-    minHeap.enqueue(num, -1 * count);
+  for (const [key, val] of map) {
+    if (!temp[val]) temp[val] = [];
+
+    temp[val].push(key);
   }
 
-  for (let i = 0; i < k; i++) {
-    result.push(minHeap.dequeue());
+  for (let i = temp.length - 1; i >= 0 && result.length < k; i--) {
+    if (temp[i]) result.push(...temp[i]);
   }
 
   return result;
