@@ -3,15 +3,13 @@
  * @return {number}
  */
 var repeatedNTimes = function (nums) {
-  const map = new Map();
+  const seen = new Set();
 
   for (const num of nums) {
-    map.set(num, (map.get(num) || 0) + 1);
-  }
-
-  for (const [key, val] of map) {
-    if (2 * val === nums.length) {
-      return key;
+    if (seen.has(num)) {
+      return num;
     }
+
+    seen.add(num);
   }
 };
