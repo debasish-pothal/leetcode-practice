@@ -17,23 +17,21 @@ var maxLevelSum = function (root) {
   let currLevel = 1;
   let maxLevel = 1;
   const queue = [root];
+  let head = 0;
 
-  while (queue.length) {
+  while (head < queue.length) {
     let currSum = 0;
-    const size = queue.length;
+    const size = queue.length - head;
 
     for (let i = 0; i < size; i++) {
-      const node = queue.shift();
+      const node = queue[head];
+      head += 1;
 
       currSum += node.val;
 
-      if (node.left) {
-        queue.push(node.left);
-      }
+      if (node.left) queue.push(node.left);
 
-      if (node.right) {
-        queue.push(node.right);
-      }
+      if (node.right) queue.push(node.right);
     }
 
     if (currSum > maxSum) {
