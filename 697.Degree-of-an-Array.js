@@ -5,22 +5,38 @@
 var findShortestSubArray = function (nums) {
   const map = new Map();
 
-  for (const num of nums) {
-    map.set(num, (map.get(num) || 0) + 1);
+  for (let i = 0; i < nums.length; i++) {
+    const num = nums[i];
+
+    if (!map.has(num)) {
+      map.set(num, {
+        count: 1,
+        first: i,
+        last: i,
+      });
+    } else {
+      const obj = map.get(num);
+
+      map.set(num, {
+        ...obj,
+        count: obj.count + 1,
+        last: i,
+      });
+    }
   }
 
   let degree = -Infinity;
   let result = Infinity;
 
-  for (const [key, val] of map) {
-    const firstIdx = nums.indexOf(key);
-    const lastIdx = nums.lastIndexOf(key);
+  for (const [num, obj] of map) {
+    const { count, first, last } = obj;
+    const length = last - first + 1;
 
-    if (val > degree) {
-      degree = val;
-      result = lastIdx - firstIdx + 1;
-    } else if (val === degree) {
-      result = Math.min(result, lastIdx - firstIdx + 1);
+    if (count > degree) {
+      degree = count;
+      result = length;
+    } else if (count === degree) {
+      result = Math.min(result, length);
     }
   }
 
