@@ -3,13 +3,6 @@
  * @return {boolean}
  */
 var hasAlternatingBits = function (n) {
-  const bin = n.toString(2);
-
-  for (let i = 0; i < bin.length - 1; i++) {
-    if (bin[i] === bin[i + 1]) {
-      return false;
-    }
-  }
-
-  return true;
+  const x = n ^ (n >> 1);
+  return (x & (x + 1)) === 0;
 };
