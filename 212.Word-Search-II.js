@@ -6,21 +6,7 @@
 class TrieNode {
   constructor() {
     this.children = {};
-    this.isWord = false;
-  }
-
-  addWord(w) {
-    let curr = this;
-
-    for (const c of w) {
-      if (!(c in curr.children)) {
-        curr.children[c] = new TrieNode();
-      }
-
-      curr = curr.children[c];
-    }
-
-    curr.isWord = true;
+    this.word = null;
   }
 }
 
@@ -28,48 +14,56 @@ var findWords = function (board, words) {
   const root = new TrieNode();
 
   for (const word of words) {
-    root.addWord(word);
+    let node = root;
+
+    for (const char of word) {
+      if (!node.children[char]) {
+        node.children[char] = new TrieNode();
+      }
+
+      node = node.children[char];
+    }
+
+    node.word = word;
   }
 
   const rows = board.length;
   const cols = board[0].length;
-  const result = new Set();
-  const visited = new Set();
+  const result = [];
 
-  const dfs = (r, c, node, word) => {
-    if (
-      r < 0 ||
-      c < 0 ||
-      r >= rows ||
-      c >= cols ||
-      visited.has(`${r}-${c}`) ||
-      !(board[r][c] in node.children)
-    ) {
-      return;
+  const dfs = (r, c, node) => {
+    if (r < 0 || c < 0 || r >= rows || c >= cols) return;
+
+    const char = board[r][c];
+    const child = node.children[char];
+    if (!child) return;
+
+    if (child.word !== null) {
+      result.push(child.word);
+      child.word = null;
     }
 
-    visited.add(`${r}-${c}`);
+    board[r][c] = "#";
 
-    node = node.children[board[r][c]];
-    word += board[r][c];
+    dfs(r + 1, c, child);
+    dfs(r - 1, c, child);
+    dfs(r, c + 1, child);
+    dfs(r, c - 1, child);
 
-    if (node.isWord) {
-      result.add(word);
+    board[r][c] = char;
+
+    if (Object.keys(child.children).length === 0) {
+      delete node.children[char];
     }
-
-    dfs(r + 1, c, node, word);
-    dfs(r - 1, c, node, word);
-    dfs(r, c + 1, node, word);
-    dfs(r, c - 1, node, word);
-
-    visited.delete(`${r}-${c}`);
   };
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      dfs(r, c, root, "");
+      if (root.children[board[r][c]]) {
+        dfs(r, c, root);
+      }
     }
   }
 
-  return Array.from(result);
+  return result;
 };
