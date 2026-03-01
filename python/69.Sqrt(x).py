@@ -4,7 +4,7 @@ class Solution:
 
         while left <= right:
             mid = (left + right) // 2
-            msqr = mid * mid
+            msqr = mid ** 2
 
             if (msqr < x):
                 left = mid + 1
