@@ -3,22 +3,18 @@ class Solution:
         count = 0
         rows = len(mat)
         cols = len(mat[0])
-
-        def dfs(r, c):
-            sumr = 0
-            sumc = 0
-            nonlocal count
-
-            for x in range(cols):
-                sumr += mat[r][x]
-            for x in range(rows):
-                sumc += mat[x][c]
-            if sumr == 1 and sumc == 1:
-                count += 1
+        row_sum = [0] * rows
+        col_sum = [0] * cols
 
         for r in range(rows):
             for c in range(cols):
                 if mat[r][c] == 1:
-                    dfs(r, c)
+                    row_sum[r] += 1
+                    col_sum[c] += 1
+
+        for r in range(rows):
+            for c in range(cols):
+                if mat[r][c] == 1 and row_sum[r] == 1 and col_sum[c] == 1:
+                    count += 1
 
         return count
