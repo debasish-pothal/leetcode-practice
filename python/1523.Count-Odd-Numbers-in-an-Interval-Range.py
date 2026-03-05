@@ -1,9 +1,9 @@
 class Solution:
     def countOdds(self, low: int, high: int) -> int:
-        count = 0
+        first_odd = low % 2
+        last_odd = high % 2
+        total = (high - low) + 1
+        remainining = total - (first_odd + last_odd)
+        remainining_odd = remainining // 2
 
-        for i in range(low, high + 1):
-            if i % 2 != 0:
-                count += 1
-
-        return count
+        return first_odd + last_odd + remainining_odd
