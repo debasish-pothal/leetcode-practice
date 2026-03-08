@@ -1,2 +1,3 @@
 # leetcode-practice
-practicing leetcode problems
+
+practicing leetcode problems in javascript and python
