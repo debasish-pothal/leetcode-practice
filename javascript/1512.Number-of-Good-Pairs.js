@@ -15,16 +15,12 @@ var numIdenticalPairs = function (nums) {
   };
 
   for (let i = 0; i < nums.length; i++) {
-    if (!map.has(nums[i])) {
-      map.set(nums[i], []);
-    }
-
-    map.set(nums[i], [...map.get(nums[i]), i]);
+    map.set(nums[i], (map.get(nums[i]) || 0) + 1);
   }
 
   for (const [key, value] of map) {
-    if (value.length > 1) {
-      count += factorial(value.length - 1);
+    if (value > 1) {
+      count += factorial(value - 1);
     }
   }
 
