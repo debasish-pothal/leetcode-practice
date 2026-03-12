@@ -7,16 +7,13 @@ var totalMoney = function (n) {
   let total = 0;
 
   while (n > 0) {
-    let rem = n <= 7 ? n : 7;
-    n = n - 7;
-    let num = start;
+    let days = Math.min(n, 7);
 
-    while (rem) {
-      total += num;
-      num += 1;
-      rem -= 1;
+    for (let i = 0; i < days; i++) {
+      total += start + i;
     }
 
+    n -= 7;
     start += 1;
   }
 
