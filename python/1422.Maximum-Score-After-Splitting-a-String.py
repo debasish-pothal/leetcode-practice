@@ -1,10 +1,7 @@
 class Solution:
     def maxScore(self, s: str) -> int:
-        ones, zeros, score = 0, 0, 0
-
-        for c in s:
-            if c == "1":
-                ones += 1
+        ones = s.count("1")
+        zeros, score = 0, 0
 
         for i in range(len(s) - 1):
             c = s[i]
