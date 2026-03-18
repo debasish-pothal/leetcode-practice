@@ -20,11 +20,4 @@ class Solution:
         dfs(root1, leaf1)
         dfs(root2, leaf2)
 
-        if len(leaf1) != len(leaf2):
-            return False
-
-        for i in range(len(leaf1)):
-            if (leaf1[i] != leaf2[i]):
-                return False
-
-        return True
+        return leaf1 == leaf2
