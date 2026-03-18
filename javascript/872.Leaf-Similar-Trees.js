@@ -12,34 +12,26 @@
  * @return {boolean}
  */
 var leafSimilar = function (root1, root2) {
-  const leafs1 = [];
-  const leafs2 = [];
-
-  const dfs = (node, leafs) => {
-    if (!node) {
-      return;
-    }
+  function* dfs(node) {
+    if (!node) return;
 
     if (!node.left && !node.right) {
-      leafs.push(node.val);
+      yield node.val;
     }
 
-    dfs(node.left, leafs);
-    dfs(node.right, leafs);
-  };
-
-  dfs(root1, leafs1);
-  dfs(root2, leafs2);
-
-  if (leafs1.length !== leafs2.length) {
-    return false;
+    yield* dfs(node.left);
+    yield* dfs(node.right);
   }
 
-  for (let i = 0; i < leafs1.length; i++) {
-    if (leafs1[i] !== leafs2[i]) {
-      return false;
-    }
-  }
+  const gen1 = dfs(root1);
+  const gen2 = dfs(root2);
 
-  return true;
+  while (true) {
+    a = gen1.next();
+    b = gen2.next();
+
+    if (a.done && b.done) return true;
+    if (a.done || b.done) return false;
+    if (a.value !== b.value) return false;
+  }
 };
