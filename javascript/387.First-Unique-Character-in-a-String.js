@@ -4,17 +4,16 @@
  */
 var firstUniqChar = function (s) {
   const map = new Map();
-  let index = Infinity;
 
   for (const c of s) {
     map.set(c, (map.get(c) || 0) + 1);
   }
 
-  for (const [key, value] of map) {
-    if (value === 1) {
-      index = Math.min(index, s.indexOf(key));
+  for (let i = 0; i < s.length; i++) {
+    if (map.get(s[i]) === 1) {
+      return i;
     }
   }
 
-  return index === Infinity ? -1 : index;
+  return -1;
 };
