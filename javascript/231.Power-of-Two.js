@@ -3,13 +3,9 @@
  * @return {boolean}
  */
 var isPowerOfTwo = function (n) {
-  for (let i = 0; i <= 32; i++) {
-    const x = Math.pow(2, i);
+  if (n <= 0) return false;
 
-    if (x === n) {
-      return true;
-    }
-  }
+  const bin = n.toString(2);
 
-  return false;
+  return bin.split("1").length - 1 === 1;
 };
