@@ -3,18 +3,15 @@
  * @return {number}
  */
 var longestPalindrome = function (s) {
-  const map = new Map();
+  const set = new Set();
   let length = 0;
 
   for (const c of s) {
-    map.set(c, (map.get(c) || 0) + 1);
-  }
-
-  for (const val of map.values()) {
-    if (val % 2 === 0) {
-      length += val;
+    if (set.has(c)) {
+      length += 2;
+      set.delete(c);
     } else {
-      length += val - 1;
+      set.add(c);
     }
   }
 
