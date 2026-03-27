@@ -18,17 +18,14 @@ var commonChars = function (words) {
   const currMap = createMap(words[0]);
 
   for (let i = 1; i < words.length; i++) {
-    const word = words[i];
     const tempMap = createMap(words[i]);
 
-    for (const [key, val] of currMap) {
-      if (!tempMap.has(key)) {
-        currMap.delete(key);
-      }
-    }
+    for (const key of [...currMap.keys()]) {
+      const val = tempMap.get(key) || 0;
 
-    for (const [key, val] of tempMap) {
-      if (currMap.has(key)) {
+      if (val === 0) {
+        currMap.delete(key);
+      } else {
         currMap.set(key, Math.min(currMap.get(key), val));
       }
     }
