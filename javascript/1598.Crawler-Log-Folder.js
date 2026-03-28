@@ -3,17 +3,17 @@
  * @return {number}
  */
 var minOperations = function (logs) {
-  const stack = [];
+  let depth = 0;
 
   for (const log of logs) {
     if (log === "../") {
-      stack.pop();
+      if (depth) depth -= 1;
     } else if (log === "./") {
       continue;
     } else {
-      stack.push(log);
+      depth += 1;
     }
   }
 
-  return stack.length;
+  return depth;
 };
