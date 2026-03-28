@@ -8,9 +8,7 @@ var minOperations = function (logs) {
   for (const log of logs) {
     if (log === "../") {
       if (depth) depth -= 1;
-    } else if (log === "./") {
-      continue;
-    } else {
+    } else if (log !== "./") {
       depth += 1;
     }
   }
