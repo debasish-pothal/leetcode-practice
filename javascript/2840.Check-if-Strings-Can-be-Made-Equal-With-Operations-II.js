@@ -4,23 +4,24 @@
  * @return {boolean}
  */
 var checkStrings = function (s1, s2) {
-  const s1_even = [];
-  const s2_even = [];
-  const s1_odd = [];
-  const s2_odd = [];
+  const even = new Array(26).fill(0);
+  const odd = new Array(26).fill(0);
 
   for (let i = 0; i < s1.length; i++) {
+    const idx1 = s1.charCodeAt(i) - 97;
+    const idx2 = s2.charCodeAt(i) - 97;
+
     if (i % 2 === 0) {
-      s1_even.push(s1[i]);
-      s2_even.push(s2[i]);
+      even[idx1] += 1;
+      even[idx2] -= 1;
     } else {
-      s1_odd.push(s1[i]);
-      s2_odd.push(s2[i]);
+      odd[idx1] += 1;
+      odd[idx2] -= 1;
     }
   }
 
-  const group1 = s1_even.sort().join("") === s2_even.sort().join("");
-  const group2 = s1_odd.sort().join("") === s2_odd.sort().join("");
+  const group1 = even.every((n) => n === 0);
+  const group2 = odd.every((n) => n === 0);
 
   return group1 && group2;
 };
