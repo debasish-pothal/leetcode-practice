@@ -23,7 +23,7 @@ var minimumSize = function (nums, maxOperations) {
   let answer = right;
 
   while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
+    const mid = Math.floor(left + (right - left) / 2);
 
     if (canDivide(mid)) {
       answer = mid;
