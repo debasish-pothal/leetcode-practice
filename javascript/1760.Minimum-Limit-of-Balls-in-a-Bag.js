@@ -4,7 +4,7 @@
  * @return {number}
  */
 var minimumSize = function (nums, maxOperations) {
-  const canDevide = (maxBalls) => {
+  const canDivide = (maxBalls) => {
     let ops = 0;
 
     for (const num of nums) {
@@ -18,9 +18,20 @@ var minimumSize = function (nums, maxOperations) {
     return true;
   };
 
-  for (let i = 1; i < Math.max(...nums); i++) {
-    if (canDevide(i)) {
-      return i;
+  let left = 1;
+  let right = Math.max(...nums);
+  let answer = right;
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (canDivide(mid)) {
+      answer = mid;
+      right = mid - 1;
+    } else {
+      left = mid + 1;
     }
   }
+
+  return answer;
 };
