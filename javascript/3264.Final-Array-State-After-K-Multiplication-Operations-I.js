@@ -5,24 +5,19 @@
  * @return {number[]}
  */
 var getFinalState = function (nums, k, multiplier) {
+  const pq = new MinPriorityQueue();
+  const OFFSET = 10000;
   const numsCopy = [...nums];
 
-  const getMinIndex = () => {
-    let min = 0;
+  for (let i = 0; i < nums.length; i++) {
+    pq.enqueue(nums[i] * OFFSET + i);
+  }
 
-    for (let i = 0; i < numsCopy.length; i++) {
-      if (numsCopy[i] < numsCopy[min]) {
-        min = i;
-      }
-    }
-
-    return min;
-  };
-
-  while (k) {
-    const idx = getMinIndex();
+  while (k--) {
+    const encoded = pq.dequeue();
+    const idx = encoded % OFFSET;
     numsCopy[idx] *= multiplier;
-    k -= 1;
+    pq.enqueue(numsCopy[idx] * OFFSET + idx);
   }
 
   return numsCopy;
