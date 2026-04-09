@@ -16,10 +16,6 @@ var check = function (nums) {
     }
   }
 
-  if (start === n - 1) {
-    return true;
-  }
-
   for (let i = start + 1; i < start + n; i++) {
     if (copy[i] > copy[i + 1]) {
       return false;
