@@ -4,23 +4,13 @@
  */
 var check = function (nums) {
   const n = nums.length;
-  const copy = [...nums, ...nums];
+  let count = 0;
 
-  let start = 0;
-
-  while (start < n - 1) {
-    if (copy[start] <= copy[start + 1]) {
-      start += 1;
-    } else {
-      break;
+  for (let i = 0; i < n; i++) {
+    if (nums[i] > nums[(i + 1) % n]) {
+      count += 1;
     }
   }
 
-  for (let i = start + 1; i < start + n; i++) {
-    if (copy[i] > copy[i + 1]) {
-      return false;
-    }
-  }
-
-  return true;
+  return count <= 1; // 0 means sorted, 1 means rotated sorted, more than 1 means invalid
 };
