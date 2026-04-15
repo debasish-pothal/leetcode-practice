@@ -4,10 +4,10 @@ class Solution:
 
         while (num1 and num2):
             if (num1 > num2):
-                num1 -= num2
+                result += num1 // num2
+                num1 %= num2
             else:
-                num2 -= num1
-            
-            result += 1
+                result += num2 // num1
+                num2 %= num1
 
         return result
