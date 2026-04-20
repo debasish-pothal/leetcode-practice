@@ -3,17 +3,16 @@
  * @return {number}
  */
 var partitionString = function (s) {
-  let set = new Set();
+  let seen = new Set();
   let count = 1;
 
   for (const c of s) {
-    if (set.has(c)) {
+    if (seen.has(c)) {
       count += 1;
-      set = new Set();
-      set.add(c);
-    } else {
-      set.add(c);
+      seen = new Set();
     }
+
+    seen.add(c);
   }
 
   return count;
