@@ -13,11 +13,7 @@ var closedIsland = function (grid) {
       return 0;
     }
 
-    if (grid[r][c] === 1) {
-      return 1;
-    }
-
-    if (visited.has(`${r}-${c}`)) {
+    if (grid[r][c] === 1 || visited.has(`${r}-${c}`)) {
       return 1;
     }
 
