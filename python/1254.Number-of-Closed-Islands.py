@@ -8,9 +8,7 @@ class Solution:
         def dfs(r, c):
             if r < 0 or c < 0 or r >= rows or c >= cols:
                 return 0
-            if grid[r][c] == 1:
-                return 1
-            if (r, c) in visited:
+            if grid[r][c] == 1 or (r, c) in visited:
                 return 1
             
             visited.add((r, c))
