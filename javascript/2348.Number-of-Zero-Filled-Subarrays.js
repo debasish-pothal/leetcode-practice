@@ -3,13 +3,7 @@
  * @return {number}
  */
 var zeroFilledSubarray = function (nums) {
-  const factorial = (n) => {
-    if (n <= 1) {
-      return 1;
-    }
-
-    return n + factorial(n - 1);
-  };
+  const factorial = (n) => (n * (n + 1)) / 2;
 
   const countConsecutiveZeros = (idx) => {
     let length = 0;
