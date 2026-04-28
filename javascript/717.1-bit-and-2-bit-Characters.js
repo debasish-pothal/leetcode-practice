@@ -3,13 +3,15 @@
  * @return {boolean}
  */
 var isOneBitCharacter = function (bits) {
-  let count = 0;
-  let i = bits.length - 2;
+  let i = 0;
 
-  while (i >= 0 && bits[i] === 1) {
-    count += 1;
-    i -= 1;
+  while (i <= bits.length - 2) {
+    if (bits[i] === 1) {
+      i += 2;
+    } else {
+      i += 1;
+    }
   }
 
-  return count % 2 === 0;
+  return i + 1 === bits.length;
 };
