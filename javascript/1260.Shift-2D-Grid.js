@@ -8,26 +8,19 @@ var shiftGrid = function (grid, k) {
   const cols = grid[0].length;
   const total = rows * cols;
 
-  const valToPos = (v) => {
-    return [Math.floor(v / cols), v % cols];
-  };
+  k %= total;
 
-  const posToVal = (r, c) => {
-    return r * cols + c;
-  };
+  const result = Array.from({ length: rows }, () => Array(cols));
 
-  const result = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const idx = r * cols + c;
+      const newIdx = (idx + k) % total;
 
-  for (let i = 0; i < rows; i++) {
-    result[i] = [];
-  }
+      const newR = Math.floor(newIdx / cols);
+      const newC = newIdx % cols;
 
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      const newVal = (posToVal(i, j) + k) % total;
-      const [newR, newC] = valToPos(newVal);
-
-      result[newR][newC] = grid[i][j];
+      result[newR][newC] = grid[r][c];
     }
   }
 
