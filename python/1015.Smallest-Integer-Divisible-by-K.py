@@ -9,7 +9,7 @@ class Solution:
         while True:
             length += 1
 
-            remainder = remainder * 10 + 1
+            remainder = (remainder * 10 + 1) % k
 
-            if remainder % k == 0:
+            if remainder == 0:
                 return length
